@@ -3458,8 +3458,7 @@ class Axes(martist.Artist):
         yy = self.convert_yunits(y)
         scaley = (yy < ymin) or (yy > ymax)
 
-        trans = mtransforms.blended_transform_factory(
-            self.transAxes, self.transData)
+        trans = self.get_yaxis_transform(which='grid')
         l = mlines.Line2D([xmin, xmax], [y, y], transform=trans, **kwargs)
         self.add_line(l)
         self.autoscale_view(scalex=False, scaley=scaley)
@@ -3522,8 +3521,7 @@ class Axes(martist.Artist):
         xx = self.convert_xunits(x)
         scalex = (xx < xmin) or (xx > xmax)
 
-        trans = mtransforms.blended_transform_factory(
-            self.transData, self.transAxes)
+        trans = self.get_xaxis_transform(which='grid')
         l = mlines.Line2D([x, x], [ymin, ymax], transform=trans, **kwargs)
         self.add_line(l)
         self.autoscale_view(scalex=scalex, scaley=False)
@@ -3568,8 +3566,7 @@ class Axes(martist.Artist):
         .. plot:: mpl_examples/pylab_examples/axhspan_demo.py
 
         """
-        trans = mtransforms.blended_transform_factory(
-            self.transAxes, self.transData)
+        trans = self.get_yaxis_transform(which='grid')
 
         # process the unit information
         self._process_unit_info([xmin, xmax], [ymin, ymax], kwargs=kwargs)
@@ -3624,8 +3621,7 @@ class Axes(martist.Artist):
             :meth:`axhspan`
                 for example plot and source code
         """
-        trans = mtransforms.blended_transform_factory(
-            self.transData, self.transAxes)
+        trans = self.get_xaxis_transform(which='grid')
 
         # process the unit information
         self._process_unit_info([xmin, xmax], [ymin, ymax], kwargs=kwargs)
@@ -6549,8 +6545,7 @@ class Axes(martist.Artist):
             values.append(val)
 
         values = np.array(values)
-        trans = mtransforms.blended_transform_factory(
-            self.transData, self.transAxes)
+        trans = self.get_xaxis_transform(which='grid')
 
         hbar = mcoll.PolyCollection(verts, transform=trans, edgecolors='face')
 
@@ -6579,8 +6574,7 @@ class Axes(martist.Artist):
 
         values = np.array(values)
 
-        trans = mtransforms.blended_transform_factory(
-            self.transAxes, self.transData)
+        trans = self.get_yaxis_transform(which='grid')
 
         vbar = mcoll.PolyCollection(verts, transform=trans, edgecolors='face')
         vbar.set_array(values)
